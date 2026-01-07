@@ -22,7 +22,8 @@ public class AdministradorServiceImpl implements AdministradorService {
 
     @Override
     public Administrador obtenerAdministradorPorId(Long numeroDocumento) {
-        return administradorRepository.findById(numeroDocumento).orElseThrow(() -> {throw new ResourceNotFoundException();});
+        return administradorRepository.findById(numeroDocumento).orElseThrow(() ->
+        {throw new ResourceNotFoundException("Administrador con Numero de Documento " + numeroDocumento+ " no encontrado");});
     }
 
     @Override

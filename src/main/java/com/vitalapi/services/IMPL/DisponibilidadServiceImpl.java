@@ -1,7 +1,7 @@
 package com.vitalapi.services.IMPL;
 
 import com.vitalapi.entities.Disponibilidad;
-import com.vitalapi.repository.DisponibilidadRepository;
+import com.vitalapi.repositories.DisponibilidadRepository;
 import com.vitalapi.services.DisponibilidadService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

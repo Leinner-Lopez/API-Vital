@@ -1,7 +1,7 @@
 package com.vitalapi.services;
 
 import com.vitalapi.entities.Cita;
-import com.vitalapi.repository.DTO.CitaDTO;
+import com.vitalapi.repositories.DTO.CitaDTO;
 
 import java.util.List;
 

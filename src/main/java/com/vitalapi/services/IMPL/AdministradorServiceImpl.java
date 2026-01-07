@@ -2,11 +2,10 @@ package com.vitalapi.services.IMPL;
 
 import com.vitalapi.entities.Administrador;
 import com.vitalapi.exception.ResourceNotFoundException;
-import com.vitalapi.repository.AdministradorRepository;
+import com.vitalapi.repositories.AdministradorRepository;
 import com.vitalapi.services.AdministradorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 

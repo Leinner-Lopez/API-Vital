@@ -1,7 +1,7 @@
 package com.vitalapi.services;
 
 import com.vitalapi.entities.Medico;
-import com.vitalapi.repository.DTO.MedicoDTO;
+import com.vitalapi.repositories.DTO.MedicoDTO;
 
 import java.time.LocalDateTime;
 import java.util.List;

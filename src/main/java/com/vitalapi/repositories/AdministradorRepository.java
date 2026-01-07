@@ -1,4 +1,4 @@
-package com.vitalapi.repository;
+package com.vitalapi.repositories;
 
 import com.vitalapi.entities.Administrador;
 import org.springframework.data.jpa.repository.JpaRepository;

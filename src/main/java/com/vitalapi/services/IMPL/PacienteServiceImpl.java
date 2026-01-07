@@ -1,7 +1,7 @@
 package com.vitalapi.services.IMPL;
 
 import com.vitalapi.entities.Paciente;
-import com.vitalapi.repository.PacienteRepository;
+import com.vitalapi.repositories.PacienteRepository;
 import com.vitalapi.services.PacienteService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

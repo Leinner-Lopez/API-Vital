@@ -1,4 +1,4 @@
-package com.vitalapi.repository.DTO;
+package com.vitalapi.repositories.DTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

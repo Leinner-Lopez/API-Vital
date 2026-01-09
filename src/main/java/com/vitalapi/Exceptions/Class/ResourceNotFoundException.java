@@ -1,4 +1,4 @@
-package com.vitalapi.Exceptions;
+package com.vitalapi.Exceptions.Class;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

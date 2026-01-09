@@ -1,8 +1,8 @@
 package com.vitalapi.Services.IMPL;
 
 import com.vitalapi.Entities.Paciente;
-import com.vitalapi.Exceptions.ResourceDuplicateException;
-import com.vitalapi.Exceptions.ResourceNotFoundException;
+import com.vitalapi.Exceptions.Class.ResourceDuplicateException;
+import com.vitalapi.Exceptions.Class.ResourceNotFoundException;
 import com.vitalapi.Mappers.PacienteMapper;
 import com.vitalapi.Repositories.DTO.PacienteDTO;
 import com.vitalapi.Repositories.PacienteRepository;

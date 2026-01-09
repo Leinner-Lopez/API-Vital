@@ -2,7 +2,8 @@ package com.vitalapi.Services.IMPL;
 
 import com.vitalapi.Entities.Cita;
 import com.vitalapi.Enums.EstadoCita;
-import com.vitalapi.Exceptions.ResourceNotFoundException;
+import com.vitalapi.Exceptions.Class.IlegalActionException;
+import com.vitalapi.Exceptions.Class.ResourceNotFoundException;
 import com.vitalapi.Mappers.CitaMapper;
 import com.vitalapi.Repositories.CitaRepository;
 import com.vitalapi.Repositories.DTO.CitaDTO;
@@ -12,15 +13,14 @@ import com.vitalapi.Services.PacienteService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
 public class CitaServiceImpl implements CitaService {
-    private final PacienteService pacienteService;
-    private final MedicoService medicoService;
+
     private final CitaRepository citaRepository;
     private final CitaMapper citaMapper;
 
@@ -35,6 +35,9 @@ public class CitaServiceImpl implements CitaService {
 
     @Override
     public CitaDTO agendarCita(CitaDTO dto) {
+        if(dto.getFechaCita().isBefore(LocalDateTime.now())){
+            throw new IlegalActionException("No se puede agendar una Cita Medica en el Pasado");
+        }
         Cita cita = citaMapper.CitaDTOtoCita(dto);
         cita.setEstado(EstadoCita.PENDIENTE);
         return citaMapper.citaToCitaDTO(citaRepository.save(cita));

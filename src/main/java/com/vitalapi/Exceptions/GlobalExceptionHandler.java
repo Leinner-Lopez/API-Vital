@@ -1,5 +1,8 @@
 package com.vitalapi.Exceptions;
 
+import com.vitalapi.Exceptions.Class.IlegalActionException;
+import com.vitalapi.Exceptions.Class.ResourceDuplicateException;
+import com.vitalapi.Exceptions.Class.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -30,6 +33,17 @@ public class GlobalExceptionHandler {
                 "DUPLICATE"
         );
         return new ResponseEntity<>(error, HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(IlegalActionException.class)
+    public ResponseEntity<ErrorDetails> handleIllegalActionException(IlegalActionException ex, WebRequest request) {
+        ErrorDetails error = new ErrorDetails(
+                LocalDateTime.now(),
+                ex.getMensaje(),
+                request.getDescription(false),
+                "ILLEGAL"
+        );
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
 
 }

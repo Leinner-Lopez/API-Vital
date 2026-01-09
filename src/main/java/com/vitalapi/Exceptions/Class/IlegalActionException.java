@@ -1,4 +1,4 @@
-package com.vitalapi.Exceptions;
+package com.vitalapi.Exceptions.Class;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,6 +7,6 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @AllArgsConstructor
-public class ResourceDuplicateException extends RuntimeException {
+public class IlegalActionException extends RuntimeException {
     private String mensaje;
 }

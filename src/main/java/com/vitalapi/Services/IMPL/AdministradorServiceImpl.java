@@ -1,8 +1,8 @@
 package com.vitalapi.Services.IMPL;
 
 import com.vitalapi.Entities.Administrador;
-import com.vitalapi.Exceptions.ResourceDuplicateException;
-import com.vitalapi.Exceptions.ResourceNotFoundException;
+import com.vitalapi.Exceptions.Class.ResourceDuplicateException;
+import com.vitalapi.Exceptions.Class.ResourceNotFoundException;
 import com.vitalapi.Repositories.AdministradorRepository;
 import com.vitalapi.Services.AdministradorService;
 import lombok.RequiredArgsConstructor;

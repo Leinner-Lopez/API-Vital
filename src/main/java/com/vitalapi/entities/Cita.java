@@ -1,9 +1,6 @@
 package com.vitalapi.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,7 +15,12 @@ public class Cita {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long documentoMedico;
+
+    @ManyToOne
+    @JoinColumn(name="medico_documento", referencedColumnName = "numeroDocumento")
+    private Medico medico;
     private LocalDateTime fechaCita;
-    private Long documentoPaciente;
+    @ManyToOne
+    @JoinColumn(name="paciente_documento", referencedColumnName = "numeroDocumento")
+    private Paciente paciente;
 }

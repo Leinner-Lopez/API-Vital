@@ -3,21 +3,28 @@ package com.vitalapi.Services.IMPL;
 import com.vitalapi.Entities.Paciente;
 import com.vitalapi.Exceptions.ResourceDuplicateException;
 import com.vitalapi.Exceptions.ResourceNotFoundException;
+import com.vitalapi.Mappers.PacienteMapper;
+import com.vitalapi.Repositories.DTO.PacienteDTO;
 import com.vitalapi.Repositories.PacienteRepository;
 import com.vitalapi.Services.PacienteService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class PacienteServiceImpl implements PacienteService {
     private final PacienteRepository pacienteRepository;
+    private final PacienteMapper pacienteMapper;
 
     @Override
-    public List<Paciente> obtenerPacientes() {
-        return pacienteRepository.findAll();
+    public List<PacienteDTO> obtenerPacientes() {
+        return pacienteRepository.findAll()
+                .stream()
+                .map(pacienteMapper::pacienteToPacienteDTO)
+                .collect(Collectors.toList());
     }
 
     @Override

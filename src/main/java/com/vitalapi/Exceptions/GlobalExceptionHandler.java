@@ -22,7 +22,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(ResourceDuplicateException.class)
-    public ResponseEntity<ErrorDetails> handleResourseDuplicateException(ResourceDuplicateException ex, WebRequest request) {
+    public ResponseEntity<ErrorDetails> handleResourceDuplicateException(ResourceDuplicateException ex, WebRequest request) {
         ErrorDetails error = new ErrorDetails(
                 LocalDateTime.now(),
                 ex.getMensaje(),

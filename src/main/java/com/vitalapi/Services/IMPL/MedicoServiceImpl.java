@@ -23,8 +23,8 @@ public class MedicoServiceImpl implements MedicoService {
 
     @Override
     public Medico registrarMedico(Medico medico) {
-        if(medicoRepository.existsByNumeroDocumento(medico.getNumeroDocumento())) {
-            throw new ResourceDuplicateException("El medico con el Numero de Documento: " + medico.getNumeroDocumento()+ " ya existe");
+        if (medicoRepository.existsByNumeroDocumento(medico.getNumeroDocumento())) {
+            throw new ResourceDuplicateException("El medico con el Numero de Documento: " + medico.getNumeroDocumento() + " ya existe");
         }
         return medicoRepository.save(medico);
     }
@@ -39,7 +39,7 @@ public class MedicoServiceImpl implements MedicoService {
 
     @Override
     public Medico obtenerMedicoPorId(Long numeroDocumento) {
-        return medicoRepository.findById(numeroDocumento).orElseThrow(()-> new ResourceNotFoundException("El medico con Número de Documento: " + numeroDocumento + " no existe"));
+        return medicoRepository.findById(numeroDocumento).orElseThrow(() -> new ResourceNotFoundException("El medico con Número de Documento: " + numeroDocumento + " no existe"));
     }
 
     @Override
@@ -52,6 +52,9 @@ public class MedicoServiceImpl implements MedicoService {
 
     @Override
     public void eliminarMedico(Long numeroDocumento) {
+        if (!medicoRepository.existsByNumeroDocumento(numeroDocumento)) {
+            throw new ResourceNotFoundException("El medico con Número de Documento: " + numeroDocumento + " no existe");
+        }
         medicoRepository.deleteById(numeroDocumento);
     }
 
@@ -65,7 +68,7 @@ public class MedicoServiceImpl implements MedicoService {
         medicoDB.setTelefono(medico.getTelefono());
         medicoDB.setBarrio(medico.getBarrio());
         medicoDB.setEspecialidad(medico.getEspecialidad());
-        if(!medicoDB.getContrasena().equals(medico.getContrasena())){
+        if (!medicoDB.getContrasena().equals(medico.getContrasena())) {
             medicoDB.setContrasena(medico.getContrasena());
         }
         return medicoRepository.save(medicoDB);

@@ -29,13 +29,13 @@ public class CitaServiceImpl implements CitaService {
     public CitaDTO obtenerCitaPorId(Long idCita) {
         return citaMapper.citaToCitaDTO(citaRepository.findById(idCita)
                 .orElseThrow(() -> {
-                    throw new ResourceNotFoundException("Cita con Id " + idCita+ " no encontrado");
+                    throw new ResourceNotFoundException("Cita con Id " + idCita + " no encontrado");
                 }));
     }
 
     @Override
     public CitaDTO agendarCita(CitaDTO dto) {
-        if(dto.getFechaCita().isBefore(LocalDateTime.now())){
+        if (dto.getFechaCita().isBefore(LocalDateTime.now())) {
             throw new IlegalActionException("No se puede agendar una Cita Medica en el Pasado");
         }
         Cita cita = citaMapper.CitaDTOtoCita(dto);
@@ -90,6 +90,10 @@ public class CitaServiceImpl implements CitaService {
 
     @Override
     public void eliminarCita(Long idCita) {
+
+        if (!citaRepository.existsById(idCita)) {
+            throw new ResourceNotFoundException("Cita con Id " + idCita + " no encontrado");
+        }
         citaRepository.deleteById(idCita);
     }
 }

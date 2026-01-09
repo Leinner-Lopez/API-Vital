@@ -2,6 +2,7 @@ package com.vitalapi.Services.IMPL;
 
 import com.vitalapi.Entities.Cita;
 import com.vitalapi.Entities.Disponibilidad;
+import com.vitalapi.Exceptions.Class.ResourceNotFoundException;
 import com.vitalapi.Repositories.CitaRepository;
 import com.vitalapi.Repositories.DTO.DisponibilidadDTO;
 import com.vitalapi.Repositories.DisponibilidadRepository;
@@ -67,6 +68,9 @@ public class DisponibilidadServiceImpl implements DisponibilidadService {
 
     @Override
     public void eliminarDisponibilidad(Long id) {
+        if(!disponibilidadRepository.existsById(id)){
+            throw new ResourceNotFoundException("Disponibilidad con id: " + id + " no encontrada");
+        }
         disponibilidadRepository.deleteById(id);
     }
 }

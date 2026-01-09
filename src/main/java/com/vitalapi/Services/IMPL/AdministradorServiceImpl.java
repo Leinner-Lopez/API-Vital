@@ -36,6 +36,9 @@ public class AdministradorServiceImpl implements AdministradorService {
 
     @Override
     public void eliminarAdministrador(Long numeroDocumento) {
+        if(!administradorRepository.existsById(numeroDocumento)) {
+            throw new ResourceNotFoundException("Administrador con Numero de Documento " + numeroDocumento+ " no encontrado");
+        }
         administradorRepository.deleteById(numeroDocumento);
     }
 

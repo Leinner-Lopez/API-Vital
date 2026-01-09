@@ -29,14 +29,14 @@ public class PacienteServiceImpl implements PacienteService {
 
     @Override
     public Paciente obtenerPacientePorId(Long numeroDocumento) {
-        return pacienteRepository.findById(numeroDocumento).orElseThrow(() ->{
+        return pacienteRepository.findById(numeroDocumento).orElseThrow(() -> {
             throw new ResourceNotFoundException("Paciente con número Documento: " + numeroDocumento + " no encontrado");
         });
     }
 
     @Override
     public Paciente registrarPaciente(Paciente paciente) {
-        if(pacienteRepository.existsByNumeroDocumento(paciente.getNumeroDocumento())) {
+        if (pacienteRepository.existsByNumeroDocumento(paciente.getNumeroDocumento())) {
             throw new ResourceDuplicateException("Paciente con número Documento: " + paciente.getNumeroDocumento() + " ya existe");
         }
         return pacienteRepository.save(paciente);
@@ -44,6 +44,9 @@ public class PacienteServiceImpl implements PacienteService {
 
     @Override
     public void eliminarPaciente(Long numeroDocumento) {
+        if (!pacienteRepository.existsByNumeroDocumento(numeroDocumento)) {
+            throw new ResourceNotFoundException("Paciente con número Documento: " + numeroDocumento + " no encontrado");
+        }
         pacienteRepository.deleteById(numeroDocumento);
     }
 

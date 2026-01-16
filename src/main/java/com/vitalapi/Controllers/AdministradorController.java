@@ -13,34 +13,34 @@ import java.util.List;
 public class AdministradorController {
     private final AdministradorService administradorService;
 
-    //Listar Administradores
-    @GetMapping
-    public List<Administrador> listarAdministradores(){
-        return administradorService.obtenerAdministradores();
-    }
-
-    //Obtener Administrador
-    @GetMapping("/{id}")
-    public Administrador obtenerAdministradorPorId(@PathVariable Long id){
-        return administradorService.obtenerAdministradorPorId(id);
-    }
-
     //Registrar Administrador
     @PostMapping
     public Administrador registrarAdministrador(@RequestBody Administrador administrador) {
         return administradorService.registrarAdministrador(administrador);
     }
 
+    //Listar Administradores
+    @GetMapping
+    public List<Administrador> listarAdministradores() {
+        return administradorService.obtenerAdministradores();
+    }
+
+    //Obtener Administrador
+    @GetMapping("/{id}")
+    public Administrador obtenerAdministradorPorId(@PathVariable Long id) {
+        return administradorService.obtenerAdministradorPorId(id);
+    }
+
     //Eliminar Administrador
     @DeleteMapping("/{id}")
-    public void eliminarAdministradorPorId(@PathVariable Long id){
+    public void eliminarAdministradorPorId(@PathVariable Long id) {
         administradorService.eliminarAdministrador(id);
     }
 
     //Actualizar Administrador
     @PutMapping
     public Administrador actualizarAdministrador(@RequestBody Administrador administrador) {
-        return administradorService.actualizarAdministrador(administrador.getNumeroDocumento(),administrador);
+        return administradorService.actualizarAdministrador(administrador.getNumeroDocumento(), administrador);
     }
 
 

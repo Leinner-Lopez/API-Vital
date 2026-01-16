@@ -1,6 +1,5 @@
 package com.vitalapi.Services;
 
-import com.vitalapi.Entities.Cita;
 import com.vitalapi.Enums.EstadoCita;
 import com.vitalapi.Repositories.DTO.CitaDTO;
 
@@ -12,12 +11,12 @@ public interface CitaService {
 
     //MEDICO, PACIENTE
     CitaDTO agendarCita(CitaDTO cita);
-    void cancelarCita(Long idCita);
+    void actualizarEstadoCita(Long idCita, EstadoCita estadoCita);
 
     //MEDICO
     List<CitaDTO> obtenerCitasAceptadas(Long numeroDocumentoMedico);
     List<CitaDTO> obtenerCitasPendientes(Long numeroDocumento);
-    void actualizarEstadoCita(Long idCita, EstadoCita estadoCita);
+    List<CitaDTO> obtenerCitasCompletadas(Long numeroDocumentoMedico);
 
     //PACIENTE
     List<CitaDTO> obtenerCitasPaciente(Long numeroDocumentoPaciente);

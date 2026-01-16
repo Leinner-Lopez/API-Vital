@@ -44,14 +44,6 @@ public class CitaServiceImpl implements CitaService {
     }
 
     @Override
-    public void cancelarCita(Long idCita) {
-        CitaDTO dto = obtenerCitaPorId(idCita);
-        Cita cita = citaMapper.CitaDTOtoCita(dto);
-        cita.setEstado(EstadoCita.RECHAZADA);
-        citaRepository.save(cita);
-    }
-
-    @Override
     public List<CitaDTO> obtenerCitasAceptadas(Long numeroDocumentoMedico) {
         return citaRepository.findByMedicoNumeroDocumentoAndEstado(numeroDocumentoMedico, EstadoCita.ACEPTADA)
                 .stream()
@@ -73,6 +65,14 @@ public class CitaServiceImpl implements CitaService {
         Cita cita = citaMapper.CitaDTOtoCita(dto);
         cita.setEstado(estadoCita);
         citaRepository.save(cita);
+    }
+
+    @Override
+    public List<CitaDTO> obtenerCitasCompletadas(Long numeroDocumentoMedico) {
+        return citaRepository.findByMedicoNumeroDocumentoAndEstado(numeroDocumentoMedico, EstadoCita.COMPLETADA)
+                .stream()
+                .map(citaMapper::citaToCitaDTO)
+                .collect(Collectors.toList());
     }
 
     @Override

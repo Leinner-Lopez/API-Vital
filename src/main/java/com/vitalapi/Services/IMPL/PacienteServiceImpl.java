@@ -4,10 +4,13 @@ import com.vitalapi.Entities.Paciente;
 import com.vitalapi.Exceptions.Class.ResourceDuplicateException;
 import com.vitalapi.Exceptions.Class.ResourceNotFoundException;
 import com.vitalapi.Mappers.PacienteMapper;
+import com.vitalapi.Repositories.AdministradorRepository;
 import com.vitalapi.Repositories.DTO.PacienteDTO;
+import com.vitalapi.Repositories.MedicoRepository;
 import com.vitalapi.Repositories.PacienteRepository;
 import com.vitalapi.Services.PacienteService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,7 +20,10 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class PacienteServiceImpl implements PacienteService {
     private final PacienteRepository pacienteRepository;
+    private final AdministradorRepository administradorRepository;
+    private final MedicoRepository medicoRepository;
     private final PacienteMapper pacienteMapper;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public List<PacienteDTO> obtenerPacientes() {
@@ -36,9 +42,12 @@ public class PacienteServiceImpl implements PacienteService {
 
     @Override
     public Paciente registrarPaciente(Paciente paciente) {
-        if (pacienteRepository.existsByNumeroDocumento(paciente.getNumeroDocumento())) {
-            throw new ResourceDuplicateException("Paciente con número Documento: " + paciente.getNumeroDocumento() + " ya existe");
+        if (pacienteRepository.existsByNumeroDocumento(paciente.getNumeroDocumento())
+                || administradorRepository.existsByNumeroDocumento(paciente.getNumeroDocumento())
+                || medicoRepository.existsByNumeroDocumento(paciente.getNumeroDocumento())) {
+            throw new ResourceDuplicateException("Usuario con número Documento: " + paciente.getNumeroDocumento() + " ya existe");
         }
+        paciente.setContrasena(passwordEncoder.encode(paciente.getContrasena()));
         return pacienteRepository.save(paciente);
     }
 

@@ -1,11 +1,15 @@
 package com.vitalapi.Services.IMPL;
 
 import com.vitalapi.Entities.Administrador;
+import com.vitalapi.Entities.Medico;
 import com.vitalapi.Exceptions.Class.ResourceDuplicateException;
 import com.vitalapi.Exceptions.Class.ResourceNotFoundException;
 import com.vitalapi.Repositories.AdministradorRepository;
+import com.vitalapi.Repositories.MedicoRepository;
+import com.vitalapi.Repositories.PacienteRepository;
 import com.vitalapi.Services.AdministradorService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,6 +18,9 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AdministradorServiceImpl implements AdministradorService {
     private final AdministradorRepository administradorRepository;
+    private final MedicoRepository medicoRepository;
+    private final PacienteRepository pacienteRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public List<Administrador> obtenerAdministradores() {
@@ -28,9 +35,12 @@ public class AdministradorServiceImpl implements AdministradorService {
 
     @Override
     public Administrador registrarAdministrador(Administrador administrador) {
-        if(administradorRepository.existsByNumeroDocumento(administrador.getNumeroDocumento())) {
-            throw new ResourceDuplicateException("Administrador con Numero de Documento " + administrador.getNumeroDocumento() + " ya existe");
+        if(administradorRepository.existsByNumeroDocumento(administrador.getNumeroDocumento())
+                || medicoRepository.existsByNumeroDocumento(administrador.getNumeroDocumento())
+                || pacienteRepository.existsByNumeroDocumento(administrador.getNumeroDocumento())) {
+            throw new ResourceDuplicateException("Usuario con Numero de Documento " + administrador.getNumeroDocumento() + " ya existe");
         }
+        administrador.setContrasena(passwordEncoder.encode(administrador.getContrasena()));
         return administradorRepository.save(administrador);
     }
 

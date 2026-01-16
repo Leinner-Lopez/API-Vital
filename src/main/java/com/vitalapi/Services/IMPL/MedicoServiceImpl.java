@@ -4,10 +4,13 @@ import com.vitalapi.Entities.Medico;
 import com.vitalapi.Exceptions.Class.ResourceDuplicateException;
 import com.vitalapi.Exceptions.Class.ResourceNotFoundException;
 import com.vitalapi.Mappers.MedicoMapper;
+import com.vitalapi.Repositories.AdministradorRepository;
 import com.vitalapi.Repositories.DTO.MedicoDTO;
 import com.vitalapi.Repositories.MedicoRepository;
+import com.vitalapi.Repositories.PacienteRepository;
 import com.vitalapi.Services.MedicoService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,15 +20,21 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class MedicoServiceImpl implements MedicoService {
 
+    private final PasswordEncoder passwordEncoder;
     private final MedicoRepository medicoRepository;
+    private final AdministradorRepository administradorRepository;
+    private final PacienteRepository pacienteRepository;
     private final MedicoMapper medicoMapper;
 
 
     @Override
     public Medico registrarMedico(Medico medico) {
-        if (medicoRepository.existsByNumeroDocumento(medico.getNumeroDocumento())) {
-            throw new ResourceDuplicateException("El medico con el Numero de Documento: " + medico.getNumeroDocumento() + " ya existe");
+        if (medicoRepository.existsByNumeroDocumento(medico.getNumeroDocumento())
+        || administradorRepository.existsByNumeroDocumento(medico.getNumeroDocumento())
+        || pacienteRepository.existsByNumeroDocumento(medico.getNumeroDocumento())) {
+            throw new ResourceDuplicateException("Usuario con el Numero de Documento: " + medico.getNumeroDocumento() + " ya existe");
         }
+        medico.setContrasena(passwordEncoder.encode(medico.getContrasena()));
         return medicoRepository.save(medico);
     }
 

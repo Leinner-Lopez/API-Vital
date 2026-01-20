@@ -47,7 +47,7 @@ public class CitaController {
     }
 
     @PutMapping("/{id}")
-    public void actualizarCita(@PathVariable Long id, @RequestParam(value = "estado") EstadoCita estadoCita){
+    public void actualizarCita(@PathVariable Long id, @RequestBody EstadoCita estadoCita){
         citaService.actualizarEstadoCita(id, estadoCita);
     }
 

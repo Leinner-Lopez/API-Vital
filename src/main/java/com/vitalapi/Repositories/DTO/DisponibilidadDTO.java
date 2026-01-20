@@ -10,6 +10,8 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class DisponibilidadDTO {
-    private LocalDateTime inicio;
-    private LocalDateTime fin;
+    private Long id;
+    private Long numeroDocumentoMedico;
+    private LocalDateTime inicioDisponibilidad;
+    private LocalDateTime finDisponibilidad;
 }

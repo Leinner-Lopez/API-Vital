@@ -1,6 +1,7 @@
 package com.vitalapi.Controllers;
 
 import com.vitalapi.Entities.Administrador;
+import com.vitalapi.Repositories.DTO.AdministradorDTO;
 import com.vitalapi.Services.AdministradorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +22,7 @@ public class AdministradorController {
 
     //Listar Administradores
     @GetMapping
-    public List<Administrador> listarAdministradores() {
+    public List<AdministradorDTO> listarAdministradores() {
         return administradorService.obtenerAdministradores();
     }
 

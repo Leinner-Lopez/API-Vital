@@ -4,7 +4,9 @@ import com.vitalapi.Entities.Administrador;
 import com.vitalapi.Entities.Medico;
 import com.vitalapi.Exceptions.Class.ResourceDuplicateException;
 import com.vitalapi.Exceptions.Class.ResourceNotFoundException;
+import com.vitalapi.Mappers.AdministradorMapper;
 import com.vitalapi.Repositories.AdministradorRepository;
+import com.vitalapi.Repositories.DTO.AdministradorDTO;
 import com.vitalapi.Repositories.MedicoRepository;
 import com.vitalapi.Repositories.PacienteRepository;
 import com.vitalapi.Services.AdministradorService;
@@ -13,6 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -21,10 +24,14 @@ public class AdministradorServiceImpl implements AdministradorService {
     private final MedicoRepository medicoRepository;
     private final PacienteRepository pacienteRepository;
     private final PasswordEncoder passwordEncoder;
+    private final AdministradorMapper administradorMapper;
 
     @Override
-    public List<Administrador> obtenerAdministradores() {
-        return administradorRepository.findAll();
+    public List<AdministradorDTO> obtenerAdministradores() {
+        return administradorRepository.findAll()
+                .stream()
+                .map(administradorMapper::administradorToAdministradorDTO)
+                .collect(Collectors.toList());
     }
 
     @Override

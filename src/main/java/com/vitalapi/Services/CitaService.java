@@ -14,14 +14,15 @@ public interface CitaService {
     void actualizarEstadoCita(Long idCita, EstadoCita estadoCita);
 
     //MEDICO
-    List<CitaDTO> obtenerCitasAceptadas(Long numeroDocumentoMedico);
-    List<CitaDTO> obtenerCitasPendientes(Long numeroDocumento);
-    List<CitaDTO> obtenerCitasCompletadas(Long numeroDocumentoMedico);
+    List<CitaDTO> obtenerCitasMedicoNumeroDocumento(Long numeroDocumento);
+    List<CitaDTO> obtenerCitasMedicoPorEstado(Long numeroDocumento, EstadoCita estado);
 
     //PACIENTE
-    List<CitaDTO> obtenerCitasPaciente(Long numeroDocumentoPaciente);
+    List<CitaDTO> obtenerCitasPaciente(Long numeroDocumento);
+    List<CitaDTO> obtenerCitasPacientePorEstado(Long numeroDocumento, EstadoCita estado);
 
     //ADMINISTRADOR
+    List<CitaDTO> obtenerCitasPorEstado(EstadoCita estado);
     List<CitaDTO> obtenerCitas();
     void eliminarCita(Long idCita);
 

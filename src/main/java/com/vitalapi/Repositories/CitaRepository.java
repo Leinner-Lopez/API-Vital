@@ -13,8 +13,17 @@ public interface CitaRepository extends JpaRepository<Cita, Long> {
     //Encontrar Citas con el número de Documento del Paciente
     List<Cita> findByPacienteNumeroDocumento(Long numeroDocumento);
 
+    //Encontrar Citas con el número de Documento del Paciente filtrando por el estado de la cita
+    List<Cita> findByPaciente_NumeroDocumentoAndEstado(Long numeroDocumento, EstadoCita estado);
+
     //Encontrar Citas con el número de Documento del Médico filtrando por el estado de la Cita
     List<Cita> findByMedicoNumeroDocumentoAndEstado(Long numeroDocumento, EstadoCita estado);
+
+    //Encontrar Citas con el número de Documento del Médico
+    List<Cita> findByMedicoNumeroDocumento(Long numeroDocumento);
+
+    //Encontrar Citas según el Estado
+    List<Cita> findByEstado(EstadoCita estado);
 
     //Encontrar Citas con el número de Documento del Médico que estén en medio de las fechas
     List<Cita> findByMedicoNumeroDocumentoAndFechaCitaBetween(Long numeroDocumento, LocalDateTime inicioDia, LocalDateTime finDia);

@@ -44,19 +44,19 @@ public class CitaServiceImpl implements CitaService {
     }
 
     @Override
-    public List<CitaDTO> obtenerCitasAceptadas(Long numeroDocumentoMedico) {
-        return citaRepository.findByMedicoNumeroDocumentoAndEstado(numeroDocumentoMedico, EstadoCita.ACEPTADA)
+    public List<CitaDTO> obtenerCitasMedicoNumeroDocumento(Long numeroDocumento){
+        return citaRepository.findByMedicoNumeroDocumento(numeroDocumento)
                 .stream()
                 .map(citaMapper::citaToCitaDTO)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Override
-    public List<CitaDTO> obtenerCitasPendientes(Long numeroDocumento) {
-        return citaRepository.findByMedicoNumeroDocumentoAndEstado(numeroDocumento, EstadoCita.PENDIENTE)
+    public List<CitaDTO> obtenerCitasMedicoPorEstado(Long numeroDocumento, EstadoCita estado){
+        return citaRepository.findByMedicoNumeroDocumentoAndEstado(numeroDocumento, estado)
                 .stream()
                 .map(citaMapper::citaToCitaDTO)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Override
@@ -68,24 +68,35 @@ public class CitaServiceImpl implements CitaService {
     }
 
     @Override
-    public List<CitaDTO> obtenerCitasCompletadas(Long numeroDocumentoMedico) {
-        return citaRepository.findByMedicoNumeroDocumentoAndEstado(numeroDocumentoMedico, EstadoCita.COMPLETADA)
+    public List<CitaDTO> obtenerCitasPaciente(Long numeroDocumento) {
+        return citaRepository.findByPacienteNumeroDocumento(numeroDocumento)
                 .stream()
                 .map(citaMapper::citaToCitaDTO)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Override
-    public List<CitaDTO> obtenerCitasPaciente(Long numeroDocumentoPaciente) {
-        return citaRepository.findByPacienteNumeroDocumento(numeroDocumentoPaciente)
+    public List<CitaDTO> obtenerCitasPacientePorEstado(Long numeroDocumento, EstadoCita estado) {
+        return citaRepository.findByPaciente_NumeroDocumentoAndEstado(numeroDocumento, estado)
                 .stream()
                 .map(citaMapper::citaToCitaDTO)
-                .collect(Collectors.toList());
+                .toList();
+    }
+
+    @Override
+    public List<CitaDTO> obtenerCitasPorEstado(EstadoCita estado){
+        return citaRepository.findByEstado(estado)
+                .stream()
+                .map(citaMapper::citaToCitaDTO)
+                .toList();
     }
 
     @Override
     public List<CitaDTO> obtenerCitas() {
-        return citaRepository.findAll().stream().map((citaMapper::citaToCitaDTO)).collect(Collectors.toList());
+        return citaRepository.findAll()
+                .stream()
+                .map((citaMapper::citaToCitaDTO))
+                .toList();
     }
 
     @Override

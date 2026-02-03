@@ -1,6 +1,7 @@
 package com.vitalapi.Controllers;
 
 
+import com.vitalapi.Entities.Cita;
 import com.vitalapi.Enums.EstadoCita;
 import com.vitalapi.Repositories.DTO.CitaDTO;
 import com.vitalapi.Services.CitaService;
@@ -17,42 +18,47 @@ public class CitaController {
 
     //Agendar Cita Médica
     @PostMapping
-    public CitaDTO agendarCita(@RequestBody CitaDTO cita){
+    public CitaDTO agendarCita(@RequestBody CitaDTO cita) {
         return citaService.agendarCita(cita);
     }
 
     @GetMapping
-    public List<CitaDTO> obtenerCitas(){
+    public List<CitaDTO> obtenerCitas() {
         return citaService.obtenerCitas();
     }
 
-    @GetMapping("/aceptadas/{id}")
-    public List<CitaDTO> obtenerCitasAceptadas(@PathVariable Long id){
-        return citaService.obtenerCitasAceptadas(id);
+    @GetMapping("/cita")
+    public List<CitaDTO> obtenerCitasPorEstado(@RequestParam EstadoCita estado) {
+        return citaService.obtenerCitasPorEstado(estado);
     }
 
-    @GetMapping("/completadas/{id}")
-    public List<CitaDTO> obtenerCitasCompletadas(@PathVariable Long id){
-        return citaService.obtenerCitasCompletadas(id);
+    @GetMapping("/medico/{id}")
+    public List<CitaDTO> obtenerCitasMedico(@PathVariable Long id) {
+        return citaService.obtenerCitasMedicoNumeroDocumento(id);
     }
 
-    @GetMapping("/pendientes/{id}")
-    public List<CitaDTO> obtenerCitasPendientes(@PathVariable Long id){
-        return citaService.obtenerCitasPendientes(id);
+    @GetMapping("/medico/{id}/estado")
+    public List<CitaDTO> obtenerCitasMedicoPorEstado(@PathVariable Long id, @RequestParam EstadoCita estado) {
+        return citaService.obtenerCitasMedicoPorEstado(id, estado);
     }
 
     @GetMapping("/paciente/{id}")
-    public List<CitaDTO> obtenerCitasPaciente(@PathVariable Long id){
+    public List<CitaDTO> obtenerCitasPaciente(@PathVariable Long id) {
         return citaService.obtenerCitasPaciente(id);
     }
 
+    @GetMapping("/paciente/{id}/estado")
+    public List<CitaDTO> obtenerCitasPacientePorEstado(@PathVariable Long id, @RequestParam EstadoCita estado) {
+        return citaService.obtenerCitasPacientePorEstado(id, estado);
+    }
+
     @PutMapping("/{id}")
-    public void actualizarCita(@PathVariable Long id, @RequestBody EstadoCita estadoCita){
+    public void actualizarCita(@PathVariable Long id, @RequestBody EstadoCita estadoCita) {
         citaService.actualizarEstadoCita(id, estadoCita);
     }
 
     @DeleteMapping("/{id}")
-    public void eliminarCita(@PathVariable Long id){
+    public void eliminarCita(@PathVariable Long id) {
         citaService.eliminarCita(id);
     }
 }

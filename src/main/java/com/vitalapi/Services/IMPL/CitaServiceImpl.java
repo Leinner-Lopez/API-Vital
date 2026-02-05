@@ -6,16 +6,14 @@ import com.vitalapi.Exceptions.Class.IlegalActionException;
 import com.vitalapi.Exceptions.Class.ResourceNotFoundException;
 import com.vitalapi.Mappers.CitaMapper;
 import com.vitalapi.Repositories.CitaRepository;
-import com.vitalapi.Repositories.DTO.CitaDTO;
+import com.vitalapi.Repositories.DTO.CitaRequestDTO;
+import com.vitalapi.Repositories.DTO.CitaResponseDTO;
 import com.vitalapi.Services.CitaService;
-import com.vitalapi.Services.MedicoService;
-import com.vitalapi.Services.PacienteService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -26,7 +24,7 @@ public class CitaServiceImpl implements CitaService {
 
 
     @Override
-    public CitaDTO obtenerCitaPorId(Long idCita) {
+    public CitaResponseDTO obtenerCitaPorId(Long idCita) {
         return citaMapper.citaToCitaDTO(citaRepository.findById(idCita)
                 .orElseThrow(() -> {
                     throw new ResourceNotFoundException("Cita con Id " + idCita + " no encontrado");
@@ -34,17 +32,17 @@ public class CitaServiceImpl implements CitaService {
     }
 
     @Override
-    public CitaDTO agendarCita(CitaDTO dto) {
+    public CitaResponseDTO agendarCita(CitaRequestDTO dto) {
         if (dto.getFechaCita().isBefore(LocalDateTime.now())) {
             throw new IlegalActionException("No se puede agendar una Cita Medica en el Pasado");
         }
-        Cita cita = citaMapper.CitaDTOtoCita(dto);
+        Cita cita = citaMapper.CitaRDTOtoCita(dto);
         cita.setEstado(EstadoCita.PENDIENTE);
         return citaMapper.citaToCitaDTO(citaRepository.save(cita));
     }
 
     @Override
-    public List<CitaDTO> obtenerCitasMedicoNumeroDocumento(Long numeroDocumento){
+    public List<CitaResponseDTO> obtenerCitasMedicoNumeroDocumento(Long numeroDocumento){
         return citaRepository.findByMedicoNumeroDocumento(numeroDocumento)
                 .stream()
                 .map(citaMapper::citaToCitaDTO)
@@ -52,7 +50,7 @@ public class CitaServiceImpl implements CitaService {
     }
 
     @Override
-    public List<CitaDTO> obtenerCitasMedicoPorEstado(Long numeroDocumento, EstadoCita estado){
+    public List<CitaResponseDTO> obtenerCitasMedicoPorEstado(Long numeroDocumento, EstadoCita estado){
         return citaRepository.findByMedicoNumeroDocumentoAndEstado(numeroDocumento, estado)
                 .stream()
                 .map(citaMapper::citaToCitaDTO)
@@ -61,14 +59,14 @@ public class CitaServiceImpl implements CitaService {
 
     @Override
     public void actualizarEstadoCita(Long idCita, EstadoCita estadoCita) {
-        CitaDTO dto = obtenerCitaPorId(idCita);
+        CitaResponseDTO dto = obtenerCitaPorId(idCita);
         Cita cita = citaMapper.CitaDTOtoCita(dto);
         cita.setEstado(estadoCita);
         citaRepository.save(cita);
     }
 
     @Override
-    public List<CitaDTO> obtenerCitasPaciente(Long numeroDocumento) {
+    public List<CitaResponseDTO> obtenerCitasPaciente(Long numeroDocumento) {
         return citaRepository.findByPacienteNumeroDocumento(numeroDocumento)
                 .stream()
                 .map(citaMapper::citaToCitaDTO)
@@ -76,7 +74,7 @@ public class CitaServiceImpl implements CitaService {
     }
 
     @Override
-    public List<CitaDTO> obtenerCitasPacientePorEstado(Long numeroDocumento, EstadoCita estado) {
+    public List<CitaResponseDTO> obtenerCitasPacientePorEstado(Long numeroDocumento, EstadoCita estado) {
         return citaRepository.findByPaciente_NumeroDocumentoAndEstado(numeroDocumento, estado)
                 .stream()
                 .map(citaMapper::citaToCitaDTO)
@@ -84,7 +82,7 @@ public class CitaServiceImpl implements CitaService {
     }
 
     @Override
-    public List<CitaDTO> obtenerCitasPorEstado(EstadoCita estado){
+    public List<CitaResponseDTO> obtenerCitasPorEstado(EstadoCita estado){
         return citaRepository.findByEstado(estado)
                 .stream()
                 .map(citaMapper::citaToCitaDTO)
@@ -92,7 +90,7 @@ public class CitaServiceImpl implements CitaService {
     }
 
     @Override
-    public List<CitaDTO> obtenerCitas() {
+    public List<CitaResponseDTO> obtenerCitas() {
         return citaRepository.findAll()
                 .stream()
                 .map((citaMapper::citaToCitaDTO))

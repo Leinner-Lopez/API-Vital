@@ -1,9 +1,9 @@
 package com.vitalapi.Controllers;
 
 
-import com.vitalapi.Entities.Cita;
 import com.vitalapi.Enums.EstadoCita;
-import com.vitalapi.Repositories.DTO.CitaDTO;
+import com.vitalapi.Repositories.DTO.CitaRequestDTO;
+import com.vitalapi.Repositories.DTO.CitaResponseDTO;
 import com.vitalapi.Services.CitaService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -18,37 +18,37 @@ public class CitaController {
 
     //Agendar Cita Médica
     @PostMapping
-    public CitaDTO agendarCita(@RequestBody CitaDTO cita) {
+    public CitaResponseDTO agendarCita(@RequestBody CitaRequestDTO cita) {
         return citaService.agendarCita(cita);
     }
 
     @GetMapping
-    public List<CitaDTO> obtenerCitas() {
+    public List<CitaResponseDTO> obtenerCitas() {
         return citaService.obtenerCitas();
     }
 
     @GetMapping("/cita")
-    public List<CitaDTO> obtenerCitasPorEstado(@RequestParam EstadoCita estado) {
+    public List<CitaResponseDTO> obtenerCitasPorEstado(@RequestParam EstadoCita estado) {
         return citaService.obtenerCitasPorEstado(estado);
     }
 
     @GetMapping("/medico/{id}")
-    public List<CitaDTO> obtenerCitasMedico(@PathVariable Long id) {
+    public List<CitaResponseDTO> obtenerCitasMedico(@PathVariable Long id) {
         return citaService.obtenerCitasMedicoNumeroDocumento(id);
     }
 
     @GetMapping("/medico/{id}/estado")
-    public List<CitaDTO> obtenerCitasMedicoPorEstado(@PathVariable Long id, @RequestParam EstadoCita estado) {
+    public List<CitaResponseDTO> obtenerCitasMedicoPorEstado(@PathVariable Long id, @RequestParam EstadoCita estado) {
         return citaService.obtenerCitasMedicoPorEstado(id, estado);
     }
 
     @GetMapping("/paciente/{id}")
-    public List<CitaDTO> obtenerCitasPaciente(@PathVariable Long id) {
+    public List<CitaResponseDTO> obtenerCitasPaciente(@PathVariable Long id) {
         return citaService.obtenerCitasPaciente(id);
     }
 
     @GetMapping("/paciente/{id}/estado")
-    public List<CitaDTO> obtenerCitasPacientePorEstado(@PathVariable Long id, @RequestParam EstadoCita estado) {
+    public List<CitaResponseDTO> obtenerCitasPacientePorEstado(@PathVariable Long id, @RequestParam EstadoCita estado) {
         return citaService.obtenerCitasPacientePorEstado(id, estado);
     }
 

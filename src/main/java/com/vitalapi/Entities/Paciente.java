@@ -1,5 +1,6 @@
 package com.vitalapi.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -17,5 +18,6 @@ import java.util.List;
 public class Paciente extends Usuario{
     private String seguroMedico;
     @OneToMany(mappedBy = "paciente")
+    @JsonIgnore
     private List<Cita> citas;
 }

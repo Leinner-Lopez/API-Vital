@@ -1,5 +1,6 @@
 package com.vitalapi.Repositories.DTO;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,17 +8,11 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-public class CitaDTO {
-    private Long id;
-    private LocalDateTime fechaCita;
-    private String estado;
-
+@AllArgsConstructor
+public class CitaRequestDTO {
     private Long documentoMedico;
     private Long documentoPaciente;
-
-    private String nombrePaciente;
-    private String nombreMedico;
-    private String especialidadMedico;
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    private LocalDateTime fechaCita;
 }

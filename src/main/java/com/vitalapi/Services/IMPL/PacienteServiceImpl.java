@@ -1,6 +1,7 @@
 package com.vitalapi.Services.IMPL;
 
 import com.vitalapi.Entities.Paciente;
+import com.vitalapi.Enums.EstadoUsuario;
 import com.vitalapi.Exceptions.Class.ResourceDuplicateException;
 import com.vitalapi.Exceptions.Class.ResourceNotFoundException;
 import com.vitalapi.Mappers.PacienteMapper;
@@ -56,7 +57,9 @@ public class PacienteServiceImpl implements PacienteService {
         if (!pacienteRepository.existsByNumeroDocumento(numeroDocumento)) {
             throw new ResourceNotFoundException("Paciente con número Documento: " + numeroDocumento + " no encontrado");
         }
-        pacienteRepository.deleteById(numeroDocumento);
+        Paciente paciente = obtenerPacientePorId(numeroDocumento);
+        paciente.setEstado(EstadoUsuario.INACTIVO);
+        pacienteRepository.save(paciente);
     }
 
     @Override

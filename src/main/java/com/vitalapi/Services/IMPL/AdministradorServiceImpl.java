@@ -2,6 +2,7 @@ package com.vitalapi.Services.IMPL;
 
 import com.vitalapi.Entities.Administrador;
 import com.vitalapi.Entities.Medico;
+import com.vitalapi.Enums.EstadoUsuario;
 import com.vitalapi.Exceptions.Class.ResourceDuplicateException;
 import com.vitalapi.Exceptions.Class.ResourceNotFoundException;
 import com.vitalapi.Mappers.AdministradorMapper;
@@ -56,7 +57,9 @@ public class AdministradorServiceImpl implements AdministradorService {
         if(!administradorRepository.existsById(numeroDocumento)) {
             throw new ResourceNotFoundException("Administrador con Numero de Documento " + numeroDocumento+ " no encontrado");
         }
-        administradorRepository.deleteById(numeroDocumento);
+        Administrador administrador = obtenerAdministradorPorId(numeroDocumento);
+        administrador.setEstado(EstadoUsuario.INACTIVO);
+        administradorRepository.save(administrador);
     }
 
     @Override

@@ -13,4 +13,5 @@ public class AdministradorDTO {
     private String apellidos;
     private String correo;
     private String telefono;
+    private String estado;
 }

@@ -14,6 +14,7 @@ public class MedicoMapper {
                 medico.getNombres(),
                 medico.getApellidos(),
                 medico.getCorreo(),
+                medico.getEstado().toString(),
                 medico.getEspecialidad()
         );
     }

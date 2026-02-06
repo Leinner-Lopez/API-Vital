@@ -15,7 +15,8 @@ public class AdministradorMapper {
                 administrador.getNombres(),
                 administrador.getApellidos(),
                 administrador.getCorreo(),
-                administrador.getTelefono()
+                administrador.getTelefono(),
+                administrador.getEstado().toString()
         );
     }
 }

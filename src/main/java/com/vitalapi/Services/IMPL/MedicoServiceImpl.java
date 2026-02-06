@@ -1,6 +1,7 @@
 package com.vitalapi.Services.IMPL;
 
 import com.vitalapi.Entities.Medico;
+import com.vitalapi.Enums.EstadoUsuario;
 import com.vitalapi.Exceptions.Class.ResourceDuplicateException;
 import com.vitalapi.Exceptions.Class.ResourceNotFoundException;
 import com.vitalapi.Mappers.MedicoMapper;
@@ -64,7 +65,9 @@ public class MedicoServiceImpl implements MedicoService {
         if (!medicoRepository.existsByNumeroDocumento(numeroDocumento)) {
             throw new ResourceNotFoundException("El medico con Número de Documento: " + numeroDocumento + " no existe");
         }
-        medicoRepository.deleteById(numeroDocumento);
+        Medico medico = obtenerMedicoPorId(numeroDocumento);
+        medico.setEstado(EstadoUsuario.INACTIVO);
+        medicoRepository.save(medico);
     }
 
     @Override

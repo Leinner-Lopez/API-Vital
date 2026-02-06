@@ -1,9 +1,7 @@
 package com.vitalapi.Entities;
 
-import jakarta.persistence.Id;
-import jakarta.persistence.MappedSuperclass;
-import jakarta.persistence.Table;
-import jakarta.persistence.UniqueConstraint;
+import com.vitalapi.Enums.EstadoUsuario;
+import jakarta.persistence.*;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -17,6 +15,8 @@ import java.util.List;
 public abstract class Usuario implements UserDetails {
     @Id
     protected Long numeroDocumento;
+    @Enumerated(EnumType.STRING)
+    protected EstadoUsuario estado = EstadoUsuario.ACTIVO;
     protected String nombres;
     protected String apellidos;
     protected String tipoDocumento;

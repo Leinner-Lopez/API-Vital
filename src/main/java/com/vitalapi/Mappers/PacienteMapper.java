@@ -12,7 +12,8 @@ public class PacienteMapper {
                 paciente.getNombres(),
                 paciente.getApellidos(),
                 paciente.getCorreo(),
-                paciente.getSeguroMedico()
+                paciente.getSeguroMedico(),
+                paciente.getEstado().toString()
         );
     }
 }

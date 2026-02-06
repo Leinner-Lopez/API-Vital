@@ -15,6 +15,6 @@ public class MedicoDTO {
     private String nombres;
     private String apellidos;
     private String correo;
-
+    private String estado;
     private String especialidad;
 }

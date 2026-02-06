@@ -13,4 +13,5 @@ public class PacienteDTO {
     private String apellidos;
     private String correo;
     private String seguroMedico;
+    private String estado;
 }
